@@ -16,7 +16,8 @@ public class Day06 : BaseDay
         var runningTotal = 1;
         foreach (var (totalTime, recordDistance) in timeDistances)
         {
-            var numTimesRecordBeat = 0;
+            // Find the first holdTime where the recordDistance is beat
+            var minHoldTime = 0;
             for (var holdTime = 0; holdTime < totalTime; holdTime++)
             {
                 var timeToMove = totalTime - holdTime;
@@ -24,10 +25,26 @@ public class Day06 : BaseDay
                 var distanceTravelled = timeToMove * speed;
                 if (distanceTravelled > recordDistance)
                 {
-                    numTimesRecordBeat++;
+                    minHoldTime = holdTime;
+                    break;
                 }
             }
-            runningTotal *= numTimesRecordBeat;
+
+            // do the same but in reverse to find the highest amount of holdTime where the record is beat
+            var maxHoldTime = 0;
+            for (var holdTime = totalTime; holdTime > minHoldTime; holdTime--)
+            {
+                var timeToMove = totalTime - holdTime;
+                var speed = holdTime;
+                var distanceTravelled = timeToMove * speed;
+                if (distanceTravelled > recordDistance)
+                {
+                    maxHoldTime = holdTime;
+                    break;
+                }
+            }
+
+            runningTotal *= maxHoldTime - minHoldTime + 1;
         }
 
         return new(runningTotal.ToString());
