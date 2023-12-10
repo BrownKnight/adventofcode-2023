@@ -1,7 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using Spectre.Console;
-
-namespace AdventOfCode;
+﻿namespace AdventOfCode;
 
 public class Day10 : BaseDay
 {
@@ -69,7 +66,7 @@ public class Day10 : BaseDay
             path.Add(ApplyDir((row, col), nextDirection));
             previousDirection = nextDirection;
         }
-        
+
         return new((path.Count / 2).ToString());
     }
 
